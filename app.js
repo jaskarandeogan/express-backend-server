@@ -7,7 +7,7 @@ const cors = require("cors");
 // a middleware to log the requests
 const morgan = require("morgan");
 
-const router = require("./routes/index");
+const routes = require("./routes/index");
 
 const port = 5000;
 const app = express();
@@ -21,10 +21,10 @@ app.use(cors());
 app.use(morgan("combined"));
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("API is healthy :)");
 });
 
-app.use("/api", router);
+app.use("/api/", routes);
 
 app.listen(port, () => {
   console.log(`Server started on port ${port} 🚀`);
