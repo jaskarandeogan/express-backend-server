@@ -1,15 +1,18 @@
-const addController = require("./addController");
-const deleteController = require("./deleteController");
-const updateController = require("./updateController");
-const { getUsers, getUserById } = require("./getUser");
-const { getTodo, getTodos } = require("./getController");
+const { getUsers, getUserById } = require("./userController");
+const {
+  getTodos,
+  getTodoById,
+  addTodo,
+  deleteTodo,
+  updateTodo,
+} = require("./todoController");
 
 module.exports = {
-  addController,
-  deleteController,
-  getTodo,
   getTodos,
-  updateController,
+  getTodoById,
+  addTodo,
+  deleteTodo,
+  updateTodo,
   getUsers,
   getUserById,
 };

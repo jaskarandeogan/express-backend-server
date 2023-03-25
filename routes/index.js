@@ -1,22 +1,21 @@
 const router = require("express").Router();
 
 const {
-  addController,
-  deleteController,
-  getTodo,
   getTodos,
-  updateController,
+  getTodoById,
+  addTodo,
+  deleteTodo,
+  updateTodo,
   getUsers,
   getUserById,
-} = require("../controllers/index");
-
+  } = require("../controllers/index");
 
 router.get("/user", getUsers);
 router.get("/user/:id", getUserById);
 router.get("/", getTodos);
-router.get("/:id", getTodo);
-router.post("/", addController);
-router.put("/:id", updateController);
-router.delete("/:id", deleteController);
+router.get("/:id", getTodoById);
+router.post("/", addTodo);
+router.delete("/:id", deleteTodo);
+router.put("/:id", updateTodo);
 
 module.exports = router;
