@@ -6,26 +6,46 @@ const bp = require("body-parser");
 const cors = require("cors");
 // a middleware to log the requests
 const morgan = require("morgan");
+//import swaggerUi
+const swaggerUI = require("swagger-ui-express");
+//import swaggerDocument
+const swaggerJsDoc = require("swagger-jsdoc");
 
-const routes = require("./routes/index");
-
-const port = 5000;
+// create an expressjs app
 const app = express();
 
-// use the body parser middleware
-app.use(bp.urlencoded({ extended: false }));
-app.use(bp.json());
-// use the cors middleware
-app.use(cors());
-// use the morgan middleware
+// use the middlewares
 app.use(morgan("combined"));
+app.use(bp.json());
+app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("API is healthy :)");
-});
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Todo API",
+      version: "1.0.0",
+      description: "A simple Express Todo API",
+    },
+    servers: [
+      {
+        url: "http://localhost:8081",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
 
-app.use("/api", routes);
+const specs = swaggerJsDoc(options);
 
-app.listen(port, () => {
-  console.log(`Server started on port ${port} 🚀`);
-});
+// use swagger-Ui-express for your app documentation endpoint
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
+// import the routes
+const routes = require("./routes");
+
+// use the routes
+app.use(routes);
+
+// start the server
+app.listen(process.env.PORT || 8081);
